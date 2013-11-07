@@ -4,6 +4,11 @@ use Symfony\Component\ClassLoader\DebugClassLoader;
 use Symfony\Component\HttpKernel\Debug\ErrorHandler;
 use Symfony\Component\HttpKernel\Debug\ExceptionHandler;
 
+$filename = __DIR__.preg_replace('#(\?.*)$#', '', $_SERVER['REQUEST_URI']);
+if (php_sapi_name() === 'cli-server' && is_file($filename)) {
+    return false;
+}
+
 require_once __DIR__.'/../vendor/autoload.php';
 
 error_reporting(-1);
