@@ -9,13 +9,27 @@ use Symfony\Component\Console\Input\InputOption;
 $console = new Application('My Silex Application', 'n/a');
 $console->getDefinition()->addOption(new InputOption('--env', '-e', InputOption::VALUE_REQUIRED, 'The Environment name.', 'dev'));
 $console
-    ->register('my-command')
+    ->register('import-venues')
     ->setDefinition(array(
-        // new InputOption('some-option', null, InputOption::VALUE_NONE, 'Some help'),
+        new InputArgument('file', InputArgument::REQUIRED, 'JSON file to import'),
     ))
-    ->setDescription('My command description')
+    ->setDescription('Import a JSON response from the Foursquare venues API')
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($app) {
-        // do something
+        $m = new MongoClient();
+        $c = $m->silex->venues;
+
+        $data = json_decode(file_get_contents($input->getArgument('file')), true);
+        $venues = $data['response']['venues'];
+
+        foreach ($venues as $venue) {
+            // Foursquare venue IDs are actually ObjectIds
+            $venue['_id'] = new MongoId($venue['id']);
+            unset($venue['id']);
+
+            $c->insert($venue);
+        }
+
+        $output->writeln(sprintf('Imported %d venues', count($venues)));
     })
 ;
 
