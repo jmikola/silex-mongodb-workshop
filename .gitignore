@@ -1,3 +1,4 @@
 /vendor/
 composer.lock
-
+config/dev.php
+config/prod.php
