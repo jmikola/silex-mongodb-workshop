@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>{{ message }}</h1>
+
+    {% if resp is defined %}
+        {{ resp }}
+    {% endif %}
+{% endblock %}

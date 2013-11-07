@@ -1,3 +1,9 @@
 <?php
 
 // configure your app for the production environment
+$app['tmhoauth.config'] = array(
+    'consumer_key' => '',
+    'consumer_secret' => '',
+    'token' => '',
+    'secret' => '',
+);
