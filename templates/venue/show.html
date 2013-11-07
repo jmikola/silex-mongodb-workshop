@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>{{ venue.name }}</h1>
+
+    <img src="{{ icon_url(venue.categories[0], 88) }}" style="background-color: #ccc">
+
+    <p>
+        {{ venue.location.address|default('') }}
+        <br>{{ venue.location.city|default('') }} {{ venue.location.country|default('') }} {{ venue.location.postalCode|default('') }}
+    </p>
+
+    {% if venue.location.lng is defined and venue.location.lat is defined %}
+        <img src="{{ gmap_url(venue.location.lng, venue.location.lat, '400x300') }}">
+    {% else %}
+        <p>Longitude and latitude are not available.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Venues</h1>
+
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Longitude</th>
+            <th>Latitude</th>
+            <th>Category</th>
+        </tr>
+        {% for venue in venues %}
+            <tr>
+                <td><a href="{{ path('venue', { id: venue._id }) }}">{{ venue.name }}</a></td>
+                <td>{{ venue.location.address|default('') }}</td>
+                <td>{{ venue.location.city|default('') }}</td>
+                <td>
+                    {% if venue.categories is not empty %}
+                        <img src="{{ icon_url(venue.categories[0], 32) }}" style="background-color: #ccc">
+                        {{ venue.categories[0].name }}
+                    {% endif %}
+                </td>
+                <td>{{ venue.location.lng|default('')|number_format(3)}}</td>
+                <td>{{ venue.location.lat|default('')|number_format(3)}}</td>
+            </tr>
+        {% else %}
+            <tr><td colspan="5">No venues found</td></tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -22,6 +22,35 @@ $app->error(function (\Exception $e, $code) use ($app) {
     return new Response($app['twig']->render($page, array('code' => $code)), $code);
 });
 
+$app->get('/venues', function () use ($app) {
+    $m = new MongoClient();
+    $c = $m->silex->venues;
+
+    return $app['twig']->render('venue/list.html', array(
+        'venues' => iterator_to_array($c->find()),
+    ));
+})
+->bind('venues')
+;
+
+$app->get('/venue/{id}', function ($id) use ($app) {
+    $m = new MongoClient();
+    $c = $m->silex->venues;
+
+    $venue = $c->findOne(array('_id' => new MongoId($id)));
+
+    if ($venue === null) {
+        throw new NotFoundHttpException(sprintf('Venue %s does not exist', $id));
+    }
+
+    return $app['twig']->render('venue/show.html', array(
+        'venue' => $venue,
+    ));
+})
+->assert('id', '^[0-9a-f]{24}$')
+->bind('venue')
+;
+
 $app->get('/oauth/request', function () use ($app) {
     $code = $app['tmhoauth']->apponly_request(array(
         'without_bearer' => true,
