@@ -1,7 +1,4 @@
 {
-    "name": "fabpot/silex-skeleton",
-    "description": "A pre-configured skeleton for the Silex microframework",
-    "license": "MIT",
     "type": "project",
     "require": {
         "php": ">=5.3.3",
@@ -23,10 +20,5 @@
     },
     "autoload": {
         "psr-0": { "": "src/" }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.0.x-dev"
-        }
     }
 }
