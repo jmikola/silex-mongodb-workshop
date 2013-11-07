@@ -16,7 +16,8 @@
         "symfony/security": "~2.2",
         "symfony/translation": "~2.2",
         "symfony/twig-bridge": "~2.2",
-        "symfony/validator": "~2.2"
+        "symfony/validator": "~2.2",
+        "jmikola/geojson": "1.0.x-dev"
     },
     "autoload": {
         "psr-0": { "": "src/" }
