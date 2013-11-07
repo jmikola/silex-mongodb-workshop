@@ -22,9 +22,11 @@ $console
         $data = json_decode(file_get_contents($input->getArgument('file')), true);
         $venues = $data['response']['venues'];
 
+        $updated = $inserted = 0;
+
         foreach ($venues as $venue) {
             // Foursquare venue IDs are actually ObjectIds
-            $venue['_id'] = new MongoId($venue['id']);
+            $venue = array_merge(array('_id' => new MongoId($venue['id'])), $venue);
             unset($venue['id']);
 
             if (isset($venue['location']['lng'], $venue['location']['lat'])) {
@@ -32,10 +34,17 @@ $console
                 $venue['loc'] = $point->jsonSerialize();
             }
 
-            $c->insert($venue);
+            $gle = $c->save($venue);
+
+            if ($gle['updatedExisting']) {
+                $updated++;
+            } else {
+                $inserted++;
+            }
         }
 
-        $output->writeln(sprintf('Imported %d venues', count($venues)));
+        $output->writeln(sprintf('Inserted %d new venues', $inserted));
+        $output->writeln(sprintf('Updated %d existing venues', $updated));
     })
 ;
 
