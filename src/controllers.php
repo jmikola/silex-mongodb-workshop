@@ -23,21 +23,16 @@ $app->error(function (\Exception $e, $code) use ($app) {
 });
 
 $app->get('/venues', function () use ($app) {
-    $m = new MongoClient();
-    $c = $m->silex->venues;
-
     return $app['twig']->render('venue/list.html', array(
-        'venues' => iterator_to_array($c->find()),
+        'venues' => $app['mongoclient.venues']->find(),
     ));
 })
 ->bind('venues')
 ;
 
 $app->get('/venue/{id}', function ($id) use ($app) {
-    $m = new MongoClient();
-    $c = $m->silex->venues;
-
-    $venue = $c->findOne(array('_id' => new MongoId($id)));
+    $venue = $app['mongoclient.venues']
+        ->findOne(array('_id' => new MongoId($id)));
 
     if ($venue === null) {
         throw new NotFoundHttpException(sprintf('Venue %s does not exist', $id));

@@ -50,6 +50,8 @@ $app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
     return $twig;
 }));
 
+$app->register(new MongoServiceProvider());
+
 $app->register(new TmhOAuthServiceProvider());
 
 return $app;
