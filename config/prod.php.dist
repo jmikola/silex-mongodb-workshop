@@ -7,3 +7,5 @@ $app['tmhoauth.config'] = array(
     'token' => '',
     'secret' => '',
 );
+
+$app['mongo.database'] = 'silex';
