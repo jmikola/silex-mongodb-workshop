@@ -47,7 +47,7 @@ Venue data fixtures are included in the repository as `venues.json`. These must
 be imported into the appropriate MongoDB collection (`silex.venues` by default):
 
 ```
-$ mongoimport -d silex -c venues < venues.json
+$ mongoimport -d silex -c venues --upsert < venues.json
 ```
 
 ## Running the Application
