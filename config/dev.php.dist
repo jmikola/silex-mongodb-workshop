@@ -4,7 +4,7 @@ use Silex\Provider\MonologServiceProvider;
 use Silex\Provider\WebProfilerServiceProvider;
 
 // include the prod configuration
-require __DIR__.'/prod.php';
+require is_file(__DIR__.'/prod.php') ? __DIR__.'/prod.php' : __DIR__.'/prod.php.dist';
 
 // enable the debug mode
 $app['debug'] = true;
