@@ -61,8 +61,10 @@ you would like a more permanent solution.
 
 ## Relevant Resources
 
-An OpenOffice presentation is included in the project repository, which serves
-as an outline for topics covered during the workshop.
+The `workshop.pdf` file included in the project repository serves as an outline
+for topics covered during the workshop. Additionally, it contains links to many
+subjects not covered in the slides below, such as importing data from Foursquare
+and OpenStreetMap.
 
 The *Getting Acquainted with MongoDB* presentation is available on
 [GitHub](http://jmikola.github.io/slides/mongodb_getting_acquainted). An older
